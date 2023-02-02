@@ -22,7 +22,7 @@ function Current() {
             <div className="weather-card">
                 <h3>Weather for Belgrade</h3>
                 <h3 className="temperature">Temperature: {weather.temperature} °C</h3>
-                <h3 className="wind-speed">Wind speed: {weather.windspeed}</h3>
+                <h3 className="wind-speed">Wind speed: {weather.windspeed} Km/h</h3>
             </div>
         </div>
     </div>
