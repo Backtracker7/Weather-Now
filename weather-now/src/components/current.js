@@ -5,9 +5,19 @@ import '../styles/current.css';
 function Current() {
 
     const [weather, setWeather] = useState([]);
+    const [latitude, setLatitude] = useState(44.80);
+    const [longitude, setLongitude] = useState(20.47);
 
     useEffect(() => {
-        fetch('https://api.open-meteo.com/v1/meteofrance?latitude=44.80&longitude=20.47&current_weather=true')
+        //get location
+        navigator.geolocation.getCurrentPosition(function(position) {
+            setLatitude(position.coords.latitude);
+            setLongitude(position.coords.longitude);
+        });
+
+        const link = 'https://api.open-meteo.com/v1/meteofrance?latitude=' + latitude + '&longitude=' + longitude + '&current_weather=true';
+
+        fetch(link)
             .then(response => response.json())
             .then((data) => {
             setWeather(data.current_weather);
