@@ -8,15 +8,16 @@ function Current() {
     const [latitude, setLatitude] = useState(44.80);
     const [longitude, setLongitude] = useState(20.47);
 
+    //get location
+    navigator.geolocation.getCurrentPosition(function(position) {
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+    });
+
+    const link = 'https://api.open-meteo.com/v1/meteofrance?latitude=' + latitude + '&longitude=' + longitude + '&current_weather=true';
+
+
     useEffect(() => {
-        //get location
-        navigator.geolocation.getCurrentPosition(function(position) {
-            setLatitude(position.coords.latitude);
-            setLongitude(position.coords.longitude);
-        });
-
-        const link = 'https://api.open-meteo.com/v1/meteofrance?latitude=' + latitude + '&longitude=' + longitude + '&current_weather=true';
-
         fetch(link)
             .then(response => response.json())
             .then((data) => {
@@ -25,7 +26,7 @@ function Current() {
             .catch((err) => {
                 console.log(err.message);
              });
-    }, []);
+    }, [latitude, longitude, link]);
 
     return (
     <div>
