@@ -16,8 +16,6 @@ function Current() {
     navigator.geolocation.getCurrentPosition(function(position) {
         setLatitude(position.coords.latitude);
         setLongitude(position.coords.longitude);
-        console.log(latitude);
-        console.log(longitude);
     });
 
     const link = 'https://api.open-meteo.com/v1/meteofrance?latitude=' + latitude + '&longitude=' + longitude + '&current_weather=true';
