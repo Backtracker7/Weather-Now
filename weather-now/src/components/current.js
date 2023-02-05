@@ -69,7 +69,7 @@ function Current() {
                 <h3>Accurate weather for your location is</h3>
                 <h3 className="temperature">Temperature: {weather.temperature} °C</h3>
                 <h3 className="wind-speed">Wind speed: {weather.windspeed} Km/h</h3>
-                <h6><span style={{fontStyle: "italic"}}>"{quote.text}"</span> - {quote.author}</h6>
+                <h4><span style={{fontStyle: "italic"}}>"{quote.text}"</span> - {quote.author}</h4>
             </div>
         </div>
     </div>
