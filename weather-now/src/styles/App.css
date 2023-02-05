@@ -1,9 +1,9 @@
 .App {
     padding-top: 10%;
-    color: white;
+    color: black;
     font-size: 1em;
     font-family:'Times New Roman', Times, serif;
 }
 body {
-    background-color: darkblue;
+    background-color: #fff;
 }

@@ -20,7 +20,6 @@ function Current() {
 
     const link = 'https://api.open-meteo.com/v1/meteofrance?latitude=' + latitude + '&longitude=' + longitude + '&current_weather=true';
 
-
         fetch(link)
             .then(response => response.json())
             .then((data) => {
