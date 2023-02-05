@@ -1,7 +1,11 @@
 .container {
     display: flex;
     align-items: center;
-    justify-content: center
+    justify-content: center;
+    opacity: 100;
+    transform: translate3d(-50px, 0, 0); /* ADDED - start x position as -50px */
+    cursor: pointer;
+    transition: 0.15s all ease-in-out;
   }
 
   img {
