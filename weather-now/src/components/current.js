@@ -9,6 +9,15 @@ function Current() {
     const [weather, setWeather] = useState([]);
     const [latitude, setLatitude] = useState(44.80);
     const [longitude, setLongitude] = useState(20.47);
+    const [quote, setQuote] = useState([]);
+
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    const i = getRandomInt(0, 16);
 
     useEffect(() => {
     
@@ -28,6 +37,17 @@ function Current() {
             .catch((err) => {
                 console.log(err.message);
              });
+        
+             const quotes = fetch("https://type.fit/api/quotes")
+             .then(function(response) {
+                 return response.json();
+             })
+             .then(function(data) {
+                 console.log(data[i]);
+                 setQuote(data[i]);
+             });
+        
+
     }, [latitude, longitude]);
 
     return (
@@ -49,7 +69,7 @@ function Current() {
                 <h3>Accurate weather for your location is</h3>
                 <h3 className="temperature">Temperature: {weather.temperature} °C</h3>
                 <h3 className="wind-speed">Wind speed: {weather.windspeed} Km/h</h3>
-                <h5>Be the best version of yourself and have a nice day! </h5>
+                <h6><span style={{fontStyle: "italic"}}>"{quote.text}"</span> - {quote.author}</h6>
             </div>
         </div>
     </div>
