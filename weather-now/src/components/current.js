@@ -3,35 +3,47 @@ import Cold from '../images/cold.jpg';
 import Cloudy from '../images/cloudy.png';
 import Sunny from '../images/sunny.png';
 import '../styles/current.css';
-import Quote from '../qoute.js';
 
 function Current() {
 
     const [weather, setWeather] = useState([]);
     const [latitude, setLatitude] = useState(44.80);
     const [longitude, setLongitude] = useState(20.47);
+    const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+    "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+];
+    const [day, setDay] = useState(1);
+    const [month, setMonth] = useState("January");
+    var today = new Date();
+    const [currTime, setCurrTime] = useState('');
+
+    const link = (latitude, longitude) => {
+        return ('https://api.open-meteo.com/v1/meteofrance?latitude=' + latitude + '&longitude=' + longitude + '&current_weather=true');
+    }
 
     useEffect(() => {
-    
-    //get location
-    navigator.geolocation.getCurrentPosition(function(position) {
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
-    });
+        //get location
+        navigator.geolocation.getCurrentPosition(function(position) {
+            setLatitude(position.coords.latitude);
+            setLongitude(position.coords.longitude);
+        });
 
-    const link = 'https://api.open-meteo.com/v1/meteofrance?latitude=' + latitude + '&longitude=' + longitude + '&current_weather=true';
+        //set time and date
+        setDay(today.toLocaleString("en-US", { day : '2-digit'}));
+        setMonth(monthNames[today.getMonth()]);
+        setCurrTime((today.getHours() <= 9 ? '0' + today.getHours() : today.getHours()) + ':' + (today.getMinutes() < 9 ? '0' + today.getMinutes() : today.getMinutes()));
 
-        fetch(link)
+        fetch(link(latitude, longitude))
             .then(response => response.json())
             .then((data) => {
+            console.log(data);
             setWeather(data.current_weather);
             })
             .catch((err) => {
                 console.log(err.message);
-             });
-        
-
+            });
     }, [latitude, longitude]);
+
 
     return (
     <div>
@@ -48,11 +60,10 @@ function Current() {
             }
             </div>
             <div className="text">
-                <h1>Hello there!</h1>
-                <h3>Accurate weather for your location is</h3>
-                <h3 className="temperature">Temperature: {weather.temperature} °C</h3>
+                <h2>{month} {day}</h2>
+                <h1>{currTime}</h1>
+                <h3 className="temperature">{weather.temperature > 0 ? '+' + weather.temperature : weather.temperature < 0 ? '-' + weather.temperature : weather.temperature} °C</h3>
                 <h3 className="wind-speed">Wind speed: {weather.windspeed} Km/h</h3>
-                <h4>{Quote}</h4>
             </div>
         </div>
     </div>
