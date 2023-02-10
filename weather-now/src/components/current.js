@@ -31,7 +31,7 @@ function Current() {
         //set time and date
         setDay(today.toLocaleString("en-US", { day : '2-digit'}));
         setMonth(monthNames[today.getMonth()]);
-        setCurrTime((today.getHours() <= 9 ? '0' + today.getHours() : today.getHours()) + ':' + (today.getMinutes() < 9 ? '0' + today.getMinutes() : today.getMinutes()));
+        setCurrTime((today.getHours() <= 9 ? '0' + today.getHours() : today.getHours()) + ':' + (today.getMinutes() <= 9 ? '0' + today.getMinutes() : today.getMinutes()));
 
         fetch(link(latitude, longitude))
             .then(response => response.json())
@@ -43,7 +43,7 @@ function Current() {
                 console.log(err.message);
             });
     }, [latitude, longitude]);
-
+    
 
     return (
     <div>
@@ -62,7 +62,7 @@ function Current() {
             <div className="text">
                 <h2>{month} {day}</h2>
                 <h1>{currTime}</h1>
-                <h3 className="temperature">{weather.temperature > 0 ? '+' + weather.temperature : weather.temperature < 0 ? '-' + weather.temperature : weather.temperature} °C</h3>
+                <h3 className="temperature">{weather.temperature > 0 ? '+' + weather.temperature : weather.temperature} °C</h3>
                 <h3 className="wind-speed">Wind speed: {weather.windspeed} Km/h</h3>
             </div>
         </div>
